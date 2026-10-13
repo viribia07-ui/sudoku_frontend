@@ -1,9 +1,8 @@
 export default async function handler() {
     const ninjaApiKey = process.env?.NINJA_API_KEY || ''
-    //TODO-req.body-diff, width, height
-    const difficulty = "medium"
-    const width = 3
-    const height = 3
+    //TODO-req.query-diff, width, height
+    const {difficulty="medium", width=3, height=3} = req.query || {}
+    
     const json = await fetch(`https://api.api-ninjas.com/v1/sudokugenerate?difficulty=${difficulty}&width=${width}&height=${height}`, {
         method: "GET",
         headers: {
