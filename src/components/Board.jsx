@@ -2,7 +2,7 @@ import Tile from "./Tile";
 import './Board.css'
 import { useState } from "react";
 
-export default function Board({ children={} }){
+export default function Board({ children={}, onWin }){
     //console.log("Board props: ", props); //props.children.puzzle, props.children.solution
     //console.log("Board children: ", children);
     const{puzzle = [], solution = []} = children
@@ -37,6 +37,7 @@ export default function Board({ children={} }){
 
         if(!numberDiff && matches==puzzleNulls){
             console.log("Solved puzzle!");
+            onWin()
         }
     }
     
