@@ -9,9 +9,44 @@ export default function Board({ children={} }){
     console.log("puzzle: ", puzzle);
     console.log("solution: ", solution);
 
-    const [currentBoard, setCurrentBoard] = useState([[]])
-    const handleTileValueChange = (newNumber, rowIdx, colIdx) => {
+    const [currentBoard, setCurrentBoard] = useState(Array.from({length: 9}, (val, key)=>[]))
+    
+    const checkWin = (board)=>{
+        console.log("board: ", board);
+        
+        let numberDiff = false
+        let matches = 0
+        //"Merge" board with puzzle, check with solution
+        board.forEach((boardRow, rowIdx) => {
+            boardRow.forEach((boardCellValue, colIdx)=>{
+                if(boardCellValue==solution[rowIdx][colIdx]){
+                    //marad false
+                    matches++
+                } else{
+                    numberDiff = true
+                }
+            })
+        });
 
+        let puzzleNulls = 0
+        board.forEach((puzzleRow, rowIdx)=>{
+            puzzleRow.forEach((puzzleCellValue, colIdx)=>{
+                if(!puzzleCellValue) puzzleNulls++
+            })
+        });
+
+        if(!numberDiff && matches==puzzleNulls){
+            console.log("Solved puzzle!");
+        }
+    }
+    
+    const handleTileValueChange = (newNumber, rowIdx, colIdx) => {
+        console.log("handleTileValueChange, newNumber, rowIdx, colIdx: ",newNumber, rowIdx, colIdx);
+        setCurrentBoard((prev)=>{
+            const newBoard = prev.slice()
+            newBoard[rowIdx][colIdx] = newNumber
+            return newBoard
+        })
     }
 
     return <div className="board">
@@ -19,11 +54,11 @@ export default function Board({ children={} }){
             <div className="row" key={rowIdx}>
                 {row.map((value, colIdx)=>
                 <Tile
-                key={colIdx}
-                numberValue={value}
-                rowidx={rowIdx}
-                colidx={colIdx}
-                onTileValueChange={handleTileValueChange}
+                    key={colIdx}
+                    numberValue={value}
+                    rowidx={rowIdx}
+                    colidx={colIdx}
+                    onTileValueChange={handleTileValueChange}
                 />)}
             </div>
         )}
