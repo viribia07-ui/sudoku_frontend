@@ -12,7 +12,7 @@ export default function Game(){
             console.log("JSON: ", json);
             const data = await json.json()
             console.log("data: ", data);
-            //setGameData(data)
+            setGameData(data)
         })
         .catch(console.warn)
         .finally(()=>{})
