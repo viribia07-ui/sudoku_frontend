@@ -12,7 +12,7 @@ export default function Game(){
     }
 
     const getSudokuData= async () => {
-        fetch(`/api/sudoku`)
+        fetch(`/api/sudoku?difficulty=${difficulty}`)
         .then(async (json)=>{ //ez lehet async
             //console.log("JSON: ", json);
             const data = await json.json()
